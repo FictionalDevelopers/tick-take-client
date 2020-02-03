@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+@include mat-core();
+@import './variables.scss';
+
+$primary: $primary1;
+$accent: mat-palette($mat-pink);
+$warn: mat-palette($mat-deep-orange);
+
+$tt-theme: mat-light-theme($primary, $accent, $warn);
+
+@include angular-material-theme($tt-theme);
