@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
+@import './theme.scss';
 
-$primary1: mat-palette($mat-teal);
-// $primary: mat-pallete($mat-teal);
-// $secondary: mat-pallete($mat-pink);
+$primary-color: mat-color($primary);
