@@ -1,4 +1,4 @@
-@import'../styles/variables.scss';
+@import '../styles/variables.scss';
 
 .wrapper {
   display: flex;
@@ -12,7 +12,7 @@
 
 .header {
   height: 100px;
-  background: $primary1;
+  background: $primary-color;
 }
 
 .footer {

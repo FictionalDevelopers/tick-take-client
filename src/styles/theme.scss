@@ -1,8 +1,7 @@
 @import '~@angular/material/theming';
 @include mat-core();
-@import './variables.scss';
 
-$primary: $primary1;
+$primary: mat-palette($mat-teal);
 $accent: mat-palette($mat-pink);
 $warn: mat-palette($mat-deep-orange);
 
