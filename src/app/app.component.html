@@ -1,11 +1,14 @@
 <div class="wrapper">
-  <header class="header">
-    <h1>App works</h1>
-    <button routerLink="/login">Login</button>
-    <button routerLink="/">Logout</button>
+  <header class="header frame">
+    <a routerLink="/">Logo</a>
+    <div class="header-tools">
+      <button routerLink="/login" [queryParams]="{type: 'login'}">Login</button>
+      <button routerLink="/login" [queryParams]="{type: 'sigh up'}">Sing up</button>
+      <button routerLink="/">Logout</button>
+    </div>
   </header>
-  <main class="content">
+  <main class="content frame">
     <router-outlet></router-outlet>
   </main>
-  <footer class="footer"></footer>
+  <footer class="footer frame">©Copyright</footer>
 </div>

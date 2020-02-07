@@ -5,18 +5,32 @@
   flex-direction: column;
 }
 
+.frame {
+  padding: 0 25px;
+}
+
 .content {
-  flex: 1 0 auto;
-  min-height: 100%;
+  height: calc(100vh - 200px);
 }
 
 .header {
+  display: flex;
   height: 100px;
+  align-items: center;
+  justify-content: space-between;
   background: $primary-color;
+
+  &-tools {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .footer {
   height: 100px;
   flex-shrink: 0;
-  background: darkgoldenrod;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: $primary-color;
 }
