@@ -1,6 +1,6 @@
 <div class="login">
   <h2>{{title | titlecase }}</h2>
-  <form [formGroup]="loginForm" class="login-form" *ngIf="isLogin else signUp">
+  <form [formGroup]="loginForm" class="login-form" *ngIf="isLoginPage else signUp" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>*Email</mat-label>
       <input matInput placeholder="Enter your email" type="email" formControlName="email" />
@@ -9,12 +9,15 @@
       <mat-label>*Password</mat-label>
       <input matInput placeholder="Enter your password" type="password" formControlName="password" />
     </mat-form-field>
-    <button mat-stroked-button color="accent">{{title | uppercase }}</button>
+    <div class="login-form-bottom">
+      <button mat-stroked-button color="warn" (click)="changeType('sign up')">To Sing Up</button>
+      <button mat-stroked-button color="primary" (click)="onLogin()">Login</button>
+    </div>
   </form>
 </div>
 
 <ng-template #signUp>
-  <form [formGroup]="loginForm" class="login-form">
+  <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>*Name</mat-label>
       <input matInput placeholder="Enter your name" type="text" formControlName="name" />
@@ -31,6 +34,9 @@
       <mat-label>*Confirm Password</mat-label>
       <input matInput placeholder="Confirm password" type="password" formControlName="confirmPass" />
     </mat-form-field>
-    <button mat-stroked-button color="accent">{{title | uppercase }}</button>
+    <div class="login-form-bottom">
+      <button mat-stroked-button color="warn" (click)="changeType('login')">To Login</button>
+      <button mat-stroked-button color="primary">Sign Up</button>
+    </div>
   </form>
 </ng-template>
