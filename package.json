@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot",
+    "start": "concurrently \"npm run server\" \"ng serve --aot\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write **/*.{ts,html}"
+    "prettier": "prettier --write **/*.{ts,html}",
+    "server": "cd ../tick-take-api && npm run start"
   },
   "husky": {
     "hooks": {
@@ -28,6 +29,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "@ngrx/store": "^8.6.0",
+    "concurrently": "^5.1.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
