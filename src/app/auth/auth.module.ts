@@ -6,12 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/material';
 
 import { authReducer } from './store/auth.reducer';
-import { LoginComponent } from './login/login.component';
+import { SingInComponent } from './sing-in/sing-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
-  declarations: [LoginComponent, SignUpComponent, AuthComponent],
+  declarations: [SingInComponent, SignUpComponent],
   imports: [
     CommonModule,
     RouterModule,

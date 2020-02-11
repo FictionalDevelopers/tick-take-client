@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { LoginComponent } from './auth/login/login.component';
-import { AuthComponent } from './auth/auth/auth.component';
+import { SingInComponent } from './auth/sing-in/sing-in.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AuthComponent,
-    children: [
-      {
-        path: 'login',
-        component: LoginComponent
-      },
-      {
-        path: 'sign-up',
-        component: SignUpComponent
-      }
-    ]
+    redirectTo: '/sign-in',
+    pathMatch: 'full'
+  },
+  {
+    path: 'sign-in',
+    component: SingInComponent
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent
   }
 ];
 
