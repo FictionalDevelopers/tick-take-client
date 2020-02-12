@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { AuthService } from '../shared/auth.service';
+
 @Component({
   selector: 'sign-up',
   templateUrl: './sign-up.component.html',
@@ -9,7 +11,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class SignUpComponent {
   signUpForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     this.signUpForm = this.fb.group({
       name: '',
       email: '',
@@ -20,5 +22,6 @@ export class SignUpComponent {
 
   onSubmit() {
     console.log(this.signUpForm);
+    // this.auth.register();
   }
 }

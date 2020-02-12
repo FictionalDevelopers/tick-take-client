@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { AuthService } from '../shared/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'sing-in',
@@ -7,9 +9,10 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   styleUrls: ['./sing-in.component.scss']
 })
 export class SingInComponent {
+  userToken$: Observable<string>;
   singInForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private auth: AuthService) {
     this.singInForm = this.fb.group({
       email: '',
       password: ''
@@ -17,6 +20,7 @@ export class SingInComponent {
   }
 
   onSubmit() {
-    console.log(this.singInForm);
+    this.userToken$ = this.auth.login(this.singInForm.value);
+    this.userToken$.subscribe(token => console.log(token));
   }
 }

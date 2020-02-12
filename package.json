@@ -3,12 +3,13 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "concurrently \"npm run server\" \"ng serve --aot\"",
+    "start": "concurrently \"npm run server\" \"npm run client\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prettier": "prettier --write **/*.{ts,html}",
+    "client": "ng serve --aot",
     "server": "cd ../tick-take-api && npm run start"
   },
   "husky": {
