@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { User } from './user.model';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +11,7 @@ export class AuthService {
   //   return this.http.post();
   // }
   login(loginData): Observable<string> {
-    return this.http.post<string>(`api/auth/login`, { params: loginData });
+    return this.http.post<string>(`api/auth/login`, loginData);
   }
 
   constructor(private http: HttpClient) {}

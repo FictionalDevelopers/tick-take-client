@@ -3,14 +3,15 @@ import { createReducer, on } from '@ngrx/store';
 import { loginSuccess } from './auth.actions';
 
 const initialState = {
-  user: null,
-  isAuth: false
+  isAuth: false,
+  errors: {}
 };
 
 const reducer = createReducer(
   initialState,
-  on(loginSuccess, (state, { user }) => {
-    return { ...state, user: { ...user } };
+  on(loginSuccess, (state, { token }) => {
+    localStorage.setItem('USER_TOKEN', token);
+    return { ...state, errors: {} };
   })
 );
 
