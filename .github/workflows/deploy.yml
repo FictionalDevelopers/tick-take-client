@@ -1,0 +1,42 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    name: Build and publish
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Cache ~/.npm
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ matrix.node-version }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Cache node_modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('package-lock.json') }}-${{ matrix.node-version }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+      - name: npm install
+        run: npm i --no-audit
+      - name: npm build
+        run: npm run build
+      - uses: cloudflare/wrangler-action@1.1.0
+        with:
+          apiToken: ${{ secrets.CF_API_TOKEN }}
+          environment: "stage"
