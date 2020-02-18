@@ -4,19 +4,36 @@
     <mat-form-field>
       <mat-label>*Name</mat-label>
       <input matInput placeholder="Enter your name" type="text" formControlName="name" />
+      <mat-error *ngIf="errorMessages('name') !== null">
+        {{ errorMessages('name') }}
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>*Email</mat-label>
       <input matInput placeholder="Enter your email" type="email" formControlName="email" />
+      <mat-error *ngIf="errorMessages('email') !== null">
+        {{ errorMessages('email') }}
+      </mat-error>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>*Password</mat-label>
-      <input matInput placeholder="Enter your password" type="password" formControlName="password" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>*Confirm Password</mat-label>
-      <input matInput placeholder="Confirm password" type="password" formControlName="confirmPass" />
-    </mat-form-field>
+    <ng-container formGroupName="passwordGroup">
+      <mat-form-field>
+        <mat-label>*Password</mat-label>
+        <input matInput placeholder="Enter your password" type="password" formControlName="password" />
+        <mat-error *ngIf="errorMessages(['passwordGroup', 'password']) !== null ">
+          {{ errorMessages(['passwordGroup', 'password']) }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>*Confirm Password</mat-label>
+        <input matInput placeholder="Confirm password" type="password" formControlName="passwordConfirm" />
+        <mat-error *ngIf="errorMessages(['passwordGroup', 'passwordConfirm']) !== null">
+          {{ errorMessages(['passwordGroup', 'passwordConfirm']) }}
+        </mat-error>
+        <mat-hint *ngIf="errorMessages('passwordGroup') !== null ">
+          {{ errorMessages('passwordGroup') }}
+        </mat-hint>
+      </mat-form-field>
+    </ng-container>
     <div class="auth-form-bottom">
       <a mat-button routerLink="/sign-in">I have an account</a>
       <button mat-raised-button color="primary">Sign me up</button>

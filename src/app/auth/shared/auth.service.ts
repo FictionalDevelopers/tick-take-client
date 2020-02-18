@@ -6,10 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  // register(signUpFormData): Observable<User> {
-  //   console.log(signUpFormData);
-  //   return this.http.post();
-  // }
+  register(signUpData): Observable<string> {
+    return this.http.post<string>(`api/auth/register`, signUpData);
+  }
+
   login(loginData): Observable<string> {
     return this.http.post<string>(`api/auth/login`, loginData);
   }
