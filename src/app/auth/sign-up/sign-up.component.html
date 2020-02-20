@@ -29,14 +29,14 @@
         <mat-error *ngIf="errorMessages(['passwordGroup', 'passwordConfirm']) !== null">
           {{ errorMessages(['passwordGroup', 'passwordConfirm']) }}
         </mat-error>
-        <mat-hint *ngIf="errorMessages('passwordGroup') !== null ">
+        <mat-hint *ngIf="errorMessages('passwordGroup') !== null" class="warn-color">
           {{ errorMessages('passwordGroup') }}
         </mat-hint>
       </mat-form-field>
     </ng-container>
     <div class="auth-form-bottom">
       <a mat-button routerLink="/sign-in">I have an account</a>
-      <button mat-raised-button color="primary">Sign me up</button>
+      <button mat-raised-button color="primary" [disabled]="!signUpForm.valid">Sign me up</button>
     </div>
   </form>
 </div>

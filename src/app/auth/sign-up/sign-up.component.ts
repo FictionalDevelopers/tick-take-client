@@ -17,8 +17,7 @@ import { ValidationService } from '../shared/validation.service';
 })
 export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
-
-  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
+  buildForm() {
     this.signUpForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, emailValidator]],
@@ -32,8 +31,11 @@ export class SignUpComponent implements OnInit {
     });
   }
 
+  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {}
+
   ngOnInit() {
     this.store.dispatch(logout());
+    this.buildForm();
   }
 
   errorMessages(controlName: string | string[]) {

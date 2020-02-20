@@ -4,14 +4,20 @@
     <mat-form-field>
       <mat-label>*Email</mat-label>
       <input matInput placeholder="Enter your email" type="email" formControlName="email" />
+      <mat-error *ngIf="errorMessages('email') !== null">
+        {{ errorMessages('email') }}
+      </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>*Password</mat-label>
       <input matInput placeholder="Enter your password" type="password" formControlName="password" />
+      <mat-error *ngIf="errorMessages('password') !== null ">
+        {{ errorMessages('password') }}
+      </mat-error>
     </mat-form-field>
     <div class="auth-form-bottom">
       <a mat-button routerLink="/sign-up">I don't have an account</a>
-      <button mat-raised-button color="primary">Sign me in</button>
+      <button mat-raised-button color="primary" [disabled]="!singInForm.valid">Sign me in</button>
     </div>
   </form>
 </div>
