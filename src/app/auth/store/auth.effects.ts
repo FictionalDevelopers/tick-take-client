@@ -5,6 +5,7 @@ import { of } from 'rxjs';
 
 import { login, authSuccess, authError, register, logout } from './auth.actions';
 import { AuthService } from '../shared/auth.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -14,10 +15,10 @@ export class AuthEffects {
       mergeMap(({ loginData }) =>
         this.auth.login(loginData).pipe(
           map(token => {
-            localStorage.setItem('USER_TOKEN', token);
-            return authSuccess({ isAuth: true });
+            this.router.navigateByUrl('/home');
+            return authSuccess({ token });
           }),
-          catchError(err => of(authError({ errors: err })))
+          catchError(({ error }) => of(authError({ errors: error })))
         )
       )
     )
@@ -29,10 +30,10 @@ export class AuthEffects {
       mergeMap(({ signUpData }) =>
         this.auth.register(signUpData).pipe(
           map(token => {
-            localStorage.setItem('USER_TOKEN', token);
-            return authSuccess({ isAuth: true });
+            this.router.navigateByUrl('/home');
+            return authSuccess({ token });
           }),
-          catchError(err => of(authError({ errors: err })))
+          catchError(({ error }) => of(authError({ errors: error })))
         )
       )
     )
@@ -48,5 +49,5 @@ export class AuthEffects {
       ),
     { dispatch: false }
   );
-  constructor(private actions$: Actions, private auth: AuthService) {}
+  constructor(private actions$: Actions, private auth: AuthService, private router: Router) {}
 }

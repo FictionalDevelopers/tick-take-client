@@ -4,14 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ValidationService {
-  getErrorMessage(validatorName: string) {
-    let config = {
-      required: 'Required',
-      invalidEmail: 'Invalid email address',
-      invalidPassword: 'Invalid! At least 6 characters, and contain number.',
-      notSame: `Your confirmation doesn't match the password.`
-    };
-
-    return config[validatorName];
+  errorMessage({ errors, touched }) {
+    for (let error in errors) {
+      if (errors.hasOwnProperty(error) && touched) {
+        return error === 'required' ? 'Required' : errors[error];
+      }
+    }
+    return null;
   }
 }

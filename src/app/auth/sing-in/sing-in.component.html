@@ -4,15 +4,15 @@
     <mat-form-field>
       <mat-label>*Email</mat-label>
       <input matInput placeholder="Enter your email" type="email" formControlName="email" />
-      <mat-error *ngIf="errorMessages('email') !== null">
-        {{ errorMessages('email') }}
+      <mat-error>
+        {{ getErrorMessage(singInForm.get('email')) }}
       </mat-error>
     </mat-form-field>
     <mat-form-field>
       <mat-label>*Password</mat-label>
       <input matInput placeholder="Enter your password" type="password" formControlName="password" />
-      <mat-error *ngIf="errorMessages('password') !== null ">
-        {{ errorMessages('password') }}
+      <mat-error>
+        {{ getErrorMessage(singInForm.get('password')) }}
       </mat-error>
     </mat-form-field>
     <div class="auth-form-bottom">

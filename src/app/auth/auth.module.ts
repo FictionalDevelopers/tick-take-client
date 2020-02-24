@@ -8,10 +8,9 @@ import { MatFormFieldModule, MatInputModule, MatButtonModule } from '@angular/ma
 import { authReducer } from './store/auth.reducer';
 import { SingInComponent } from './sing-in/sing-in.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
-import { ErrorsOutputComponent } from './errors-output/errors-output.component';
 
 @NgModule({
-  declarations: [SingInComponent, SignUpComponent, ErrorsOutputComponent],
+  declarations: [SingInComponent, SignUpComponent],
   imports: [
     CommonModule,
     RouterModule,
