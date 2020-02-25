@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app.state';
-import { login, logout } from '../store/auth.actions';
-import { ValidationService } from '../shared/validation.service';
-import { emailValidator } from '../shared/validators/email.validator';
-import { passwordValidator } from '../shared/validators/password.validator';
+import { login } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
+
+import { ValidationService } from '../shared/validation.service';
+import { passwordValidator } from '../shared/validators/password.validator';
 
 @Component({
   selector: 'sing-in',
@@ -20,9 +20,9 @@ export class SingInComponent implements OnInit {
   singInForm: FormGroup;
   authErrors$ = this.store.select(getAuthErrors);
 
-  buildForm() {
+  buildForm(): void {
     this.singInForm = this.fb.group({
-      email: ['', [Validators.required, emailValidator]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, passwordValidator]]
     });
   }
@@ -32,18 +32,19 @@ export class SingInComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.authErrors$.subscribe(errors => {
-      for (let err in errors) {
-        const control = this.singInForm.controls[err];
-        control ? control.setErrors({ [err]: errors[err] }) : this.singInForm.setErrors({ [err]: errors[err] });
+      for (const err in errors) {
+        if (errors.hasOwnProperty(err)) {
+          this.singInForm.controls[err].setErrors({ [err]: errors[err] });
+        }
       }
     });
   }
 
-  getErrorMessage(control: FormControl) {
+  getErrorMessage(control: AbstractControl): string {
     return this.validation.errorMessage(control);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     this.singInForm.markAllAsTouched();
     this.store.dispatch(login({ loginData: this.singInForm.value }));
   }

@@ -1,7 +1,7 @@
 @import '../../../styles/variables.scss';
 
-.content {
-  height: calc(100vh - 200px);
+.frame {
+  padding: 0 25px;
 }
 
 .header {
@@ -15,6 +15,10 @@
     display: flex;
     align-items: center;
   }
+}
+
+.content {
+  height: calc(100vh - 200px);
 }
 
 .footer {

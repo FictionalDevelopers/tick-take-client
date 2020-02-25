@@ -29,7 +29,7 @@
         <mat-error>
           {{ getErrorMessage(signUpForm.get(['passwordGroup', 'passwordConfirm'])) }}
         </mat-error>
-        <mat-hint>
+        <mat-hint class="warn-color">
           {{ getErrorMessage(signUpForm.get('passwordGroup')) }}
         </mat-hint>
       </mat-form-field>

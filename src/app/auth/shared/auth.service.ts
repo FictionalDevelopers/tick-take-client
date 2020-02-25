@@ -2,16 +2,26 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { SignUpData, SignInData } from './authData.model';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  register(signUpData): Observable<string> {
+  register(signUpData: SignUpData): Observable<string> {
     return this.http.post<string>(`api/auth/register`, signUpData);
   }
 
-  login(loginData): Observable<string> {
+  login(loginData: SignInData): Observable<string> {
     return this.http.post<string>(`api/auth/login`, loginData);
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('USER_TOKEN', token);
+  }
+
+  logout(): void {
+    localStorage.removeItem('USER_TOKEN');
   }
 
   constructor(private http: HttpClient) {}

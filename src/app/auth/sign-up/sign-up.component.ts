@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../store/app.state';
-import { register, logout } from '../store/auth.actions';
+import { register } from '../store/auth.actions';
+import { getAuthErrors } from '../store/auth.selector';
 
-import { emailValidator } from '../shared/validators/email.validator';
 import { passwordValidator } from '../shared/validators/password.validator';
 import { confirmPasswordValidator } from '../shared/validators/confirm-password.validator';
 import { ValidationService } from '../shared/validation.service';
-import { getAuthErrors } from '../store/auth.selector';
 
 @Component({
   selector: 'sign-up',
@@ -20,10 +19,10 @@ export class SignUpComponent implements OnInit {
   signUpForm: FormGroup;
   authErrors$ = this.store.select(getAuthErrors);
 
-  buildForm() {
+  buildForm(): void {
     this.signUpForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, emailValidator]],
+      email: ['', [Validators.required, Validators.email]],
       passwordGroup: this.fb.group(
         {
           password: ['', [Validators.required, passwordValidator]],
@@ -39,18 +38,19 @@ export class SignUpComponent implements OnInit {
   ngOnInit() {
     this.buildForm();
     this.authErrors$.subscribe(errors => {
-      for (let err in errors) {
-        const control = this.signUpForm.controls[err];
-        control ? control.setErrors({ [err]: errors[err] }) : this.signUpForm.setErrors({ [err]: errors[err] });
+      for (const err in errors) {
+        if (errors.hasOwnProperty(err)) {
+          this.signUpForm.controls[err].setErrors({ [err]: errors[err] });
+        }
       }
     });
   }
 
-  getErrorMessage(control: FormControl) {
+  getErrorMessage(control: AbstractControl): string {
     return this.validation.errorMessage(control);
   }
 
-  onSubmit() {
+  onSubmit(): void {
     const { name, email, passwordGroup } = this.signUpForm.value;
     const signUpData = {
       name,

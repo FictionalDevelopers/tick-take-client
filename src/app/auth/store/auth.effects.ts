@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { login, authSuccess, authError, register, logout } from './auth.actions';
+import { login, authSuccess, authError, register, logout, setIsAuth, logoutSuccess } from './auth.actions';
 import { AuthService } from '../shared/auth.service';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -14,10 +14,7 @@ export class AuthEffects {
       ofType(login),
       mergeMap(({ loginData }) =>
         this.auth.login(loginData).pipe(
-          map(token => {
-            this.router.navigateByUrl('/home');
-            return authSuccess({ token });
-          }),
+          map(token => setIsAuth({ token })),
           catchError(({ error }) => of(authError({ errors: error })))
         )
       )
@@ -29,25 +26,30 @@ export class AuthEffects {
       ofType(register),
       mergeMap(({ signUpData }) =>
         this.auth.register(signUpData).pipe(
-          map(token => {
-            this.router.navigateByUrl('/home');
-            return authSuccess({ token });
-          }),
+          map(token => setIsAuth({ token })),
           catchError(({ error }) => of(authError({ errors: error })))
         )
       )
     )
   );
 
-  logout$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(logout),
-        map(() => {
-          localStorage.removeItem('USER_TOKEN');
-        })
-      ),
-    { dispatch: false }
+  setIsAuth$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(setIsAuth),
+      map(({ token }) => {
+        this.auth.setToken(token);
+        this.router.navigateByUrl('/home');
+        return authSuccess({ isAuth: true });
+      })
+    )
+  );
+
+  logout$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(logout),
+      tap(() => this.auth.logout()),
+      map(() => logoutSuccess({ isAuth: false }))
+    )
   );
   constructor(private actions$: Actions, private auth: AuthService, private router: Router) {}
 }
