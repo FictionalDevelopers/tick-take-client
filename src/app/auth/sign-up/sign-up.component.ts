@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../store/app.state';
-import { register } from '../store/auth.actions';
+import { register, ifHasToken } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
 
-import { passwordValidator } from '../shared/validators/password.validator';
 import { confirmPasswordValidator } from '../shared/validators/confirm-password.validator';
+import { nameValidator } from '../shared/validators/name.validator';
 import { ValidationService } from '../shared/validation.service';
 
 @Component({
-  selector: 'sign-up',
+  selector: 'tt-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
@@ -21,11 +21,11 @@ export class SignUpComponent implements OnInit {
 
   buildForm(): void {
     this.signUpForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required, nameValidator]],
       email: ['', [Validators.required, Validators.email]],
       passwordGroup: this.fb.group(
         {
-          password: ['', [Validators.required, passwordValidator]],
+          password: ['', [Validators.required, Validators.minLength(3)]],
           passwordConfirm: ['', [Validators.required]]
         },
         { validator: confirmPasswordValidator }
@@ -33,7 +33,9 @@ export class SignUpComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {}
+  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
+    this.store.dispatch(ifHasToken());
+  }
 
   ngOnInit() {
     this.buildForm();

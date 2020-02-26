@@ -4,14 +4,13 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app.state';
-import { login } from '../store/auth.actions';
+import { login, ifHasToken } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
 
 import { ValidationService } from '../shared/validation.service';
-import { passwordValidator } from '../shared/validators/password.validator';
 
 @Component({
-  selector: 'sing-in',
+  selector: 'tt-sing-in',
   templateUrl: './sing-in.component.html',
   styleUrls: ['./sing-in.component.scss']
 })
@@ -23,11 +22,13 @@ export class SingInComponent implements OnInit {
   buildForm(): void {
     this.singInForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, passwordValidator]]
+      password: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {}
+  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
+    this.store.dispatch(ifHasToken());
+  }
 
   ngOnInit() {
     this.buildForm();

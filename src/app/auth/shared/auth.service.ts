@@ -20,6 +20,10 @@ export class AuthService {
     localStorage.setItem('USER_TOKEN', token);
   }
 
+  ifHasToken(): boolean {
+    return !!localStorage.getItem('USER_TOKEN');
+  }
+
   logout(): void {
     localStorage.removeItem('USER_TOKEN');
   }
