@@ -20,7 +20,7 @@ export class AuthService {
     localStorage.setItem('USER_TOKEN', token);
   }
 
-  ifHasToken(): boolean {
+  checkAuth(): boolean {
     return !!localStorage.getItem('USER_TOKEN');
   }
 

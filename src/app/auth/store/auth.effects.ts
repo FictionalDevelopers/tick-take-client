@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { login, authSuccess, authError, register, logout, setIsAuth, logoutSuccess, ifHasToken } from './auth.actions';
+import { login, authError, register, logout, setIsAuth, checkAuth } from './auth.actions';
 import { AuthService } from '../shared/auth.service';
 
 @Injectable()
@@ -15,6 +15,7 @@ export class AuthEffects {
       mergeMap(({ loginData }) =>
         this.auth.login(loginData).pipe(
           tap(token => this.auth.setToken(token)),
+          tap(() => this.router.navigateByUrl('/home')),
           map(() => setIsAuth({ isAuth: true })),
           catchError(({ error }) => of(authError({ errors: error })))
         )
@@ -28,6 +29,7 @@ export class AuthEffects {
       mergeMap(({ signUpData }) =>
         this.auth.register(signUpData).pipe(
           tap(token => this.auth.setToken(token)),
+          tap(() => this.router.navigateByUrl('/home')),
           map(() => setIsAuth({ isAuth: true })),
           catchError(({ error }) => of(authError({ errors: error })))
         )
@@ -35,18 +37,10 @@ export class AuthEffects {
     )
   );
 
-  setIsAuth$ = createEffect(() =>
+  checkAuth$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(setIsAuth),
-      tap(() => this.router.navigateByUrl('/home')),
-      map(({ isAuth }) => authSuccess({ isAuth }))
-    )
-  );
-
-  ifHasToken$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ifHasToken),
-      map(() => (this.auth.ifHasToken() ? setIsAuth({ isAuth: true }) : logoutSuccess({ isAuth: false })))
+      ofType(checkAuth),
+      map(() => setIsAuth({ isAuth: this.auth.checkAuth() }))
     )
   );
 
@@ -55,7 +49,7 @@ export class AuthEffects {
       ofType(logout),
       tap(() => this.auth.logout()),
       tap(() => this.router.navigateByUrl('/sign-in')),
-      map(() => logoutSuccess({ isAuth: false }))
+      map(() => setIsAuth({ isAuth: false }))
     )
   );
   constructor(private actions$: Actions, private auth: AuthService, private router: Router) {}

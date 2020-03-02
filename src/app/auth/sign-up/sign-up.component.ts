@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl } from '@angular/fo
 import { Store } from '@ngrx/store';
 
 import { AppState } from '../../store/app.state';
-import { register, ifHasToken } from '../store/auth.actions';
+import { register, checkAuth } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
 
 import { confirmPasswordValidator } from '../shared/validators/confirm-password.validator';
@@ -34,7 +34,7 @@ export class SignUpComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
-    this.store.dispatch(ifHasToken());
+    this.store.dispatch(checkAuth());
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ifHasToken } from './auth/store/auth.actions';
+import { checkAuth } from './auth/store/auth.actions';
 import { AppState } from './store/app.state';
 
 @Component({
@@ -11,6 +11,6 @@ import { AppState } from './store/app.state';
 })
 export class AppComponent {
   constructor(private store: Store<AppState>) {
-    this.store.dispatch(ifHasToken());
+    this.store.dispatch(checkAuth());
   }
 }

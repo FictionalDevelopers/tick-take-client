@@ -9,7 +9,7 @@ export class ValidationService {
       if (errors.hasOwnProperty(err) && touched) {
         const config = {
           required: 'Required',
-          email: 'Invalid email address!',
+          email: 'Invalid email address.',
           minlength: `At least ${errors[err].requiredLength} characters`
         };
         return config[err] ? config[err] : errors[err];

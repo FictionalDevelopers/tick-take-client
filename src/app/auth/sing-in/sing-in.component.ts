@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app.state';
-import { login, ifHasToken } from '../store/auth.actions';
+import { login, checkAuth } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
 
 import { ValidationService } from '../shared/validation.service';
@@ -27,7 +27,7 @@ export class SingInComponent implements OnInit {
   }
 
   constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
-    this.store.dispatch(ifHasToken());
+    this.store.dispatch(checkAuth());
   }
 
   ngOnInit() {
