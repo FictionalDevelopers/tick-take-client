@@ -1,0 +1,11 @@
+@import '../../../styles/variables.scss';
+
+.auth-form {
+  & .warn-color {
+    color: $warn-color
+  }
+
+  &-bottom {
+    margin-top: 6.5px;
+  }
+}

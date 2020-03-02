@@ -1,0 +1,42 @@
+<div class="auth">
+  <form [formGroup]="signUpForm" class="auth-form" (ngSubmit)="onSubmit()">
+    <h2 class="auth-title">Sign Up</h2>
+    <mat-form-field>
+      <mat-label>*Name</mat-label>
+      <input matInput placeholder="Enter your name" type="text" formControlName="name" />
+      <mat-error>
+        {{ getErrorMessage(signUpForm.get('name')) }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>*Email</mat-label>
+      <input matInput placeholder="Enter your email" type="email" formControlName="email" />
+      <mat-error>
+        {{ getErrorMessage(signUpForm.get('email')) }}
+      </mat-error>
+    </mat-form-field>
+    <ng-container formGroupName="passwordGroup">
+      <mat-form-field>
+        <mat-label>*Password</mat-label>
+        <input matInput placeholder="Enter your password" type="password" formControlName="password" />
+        <mat-error>
+          {{ getErrorMessage(signUpForm.get(['passwordGroup', 'password'])) }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>*Confirm Password</mat-label>
+        <input matInput placeholder="Confirm password" type="password" formControlName="passwordConfirm" />
+        <mat-error>
+          {{ getErrorMessage(signUpForm.get(['passwordGroup', 'passwordConfirm'])) }}
+        </mat-error>
+        <mat-hint class="warn-color">
+          {{ getErrorMessage(signUpForm.get('passwordGroup')) }}
+        </mat-hint>
+      </mat-form-field>
+    </ng-container>
+    <div class="auth-form-bottom">
+      <a mat-button routerLink="/sign-in">I have an account</a>
+      <button mat-raised-button color="primary" [disabled]="!signUpForm.valid">Sign me up</button>
+    </div>
+  </form>
+</div>
