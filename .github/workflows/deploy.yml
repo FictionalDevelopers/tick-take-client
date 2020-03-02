@@ -11,7 +11,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-    name: Build and publish
+    name: Build
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -36,6 +36,29 @@ jobs:
         run: npm i --no-audit
       - name: npm build
         run: npm run build
+      - name: Upload build artefact
+        uses: actions/upload-artifact@v1
+        with:
+          name: angular-app
+          path: dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+    name: Deploy
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Download build artefact
+        uses: actions/download-artifact@v1
+        with:
+          name: angular-app
+          path: dist
       - uses: cloudflare/wrangler-action@1.1.0
         with:
           apiToken: ${{ secrets.CF_API_TOKEN }}
