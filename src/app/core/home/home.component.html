@@ -1,7 +1,8 @@
 <header class="header frame">
   <a routerLink="/">Logo</a>
   <div class="header-tools">
-    <button (click)="logout()">Logout</button>
+    <button mat-button (click)="logout()">Logout</button>
+    <a mat-button routerLink='/profile'>Profile</a>
   </div>
 </header>
 <main class="content frame">
