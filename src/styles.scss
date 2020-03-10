@@ -10,6 +10,15 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  padding: 0 25px;
+}
+
 .auth {
   height: 100%;
   display: flex;
@@ -23,8 +32,6 @@ body {
   }
 
   &-form {
-    display: flex;
-    flex-direction: column;
     max-width: 300px;
     width: calc(100vw - 15%);
 

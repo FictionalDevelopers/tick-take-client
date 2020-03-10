@@ -1,1 +1,17 @@
-<p>lot-manager works!</p>
+<div class="lot-manager wrapper">
+  <form [formGroup]="lotForm" (ngSubmit)="onSubmit()" class="lot-manager-form">
+    <h2 class="lot-manager-title">Lot Manager</h2>
+    <mat-form-field>
+      <mat-label>*Name</mat-label>
+      <input matInput type="text" autocomplete="off" class="lot-manager-name">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>*Description</mat-label>
+      <textarea matInput type="text" autocomplete="off" rows="13" cols="20" class="lot-manager-description"></textarea>
+    </mat-form-field>
+    <div class="lot-manager-bottom">
+      <button mat-raised-button color="warn">Cancel</button>
+      <button mat-raised-button color="primary">Create lot</button>
+    </div>
+  </form>
+</div>

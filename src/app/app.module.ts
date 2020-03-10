@@ -12,13 +12,14 @@ import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { AuthEffects } from './auth/store/auth.effects';
+import { ProfileEffects } from './profile/store/profile.effects';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, ProfileEffects]),
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
