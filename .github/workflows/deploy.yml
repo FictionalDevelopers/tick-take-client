@@ -18,14 +18,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Cache ~/.npm
+      - name: Cache ~/.npm folder
         uses: actions/cache@v1
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}-${{ matrix.node-version }}
           restore-keys: |
             ${{ runner.os }}-node-
-      - name: Cache node_modules
+      - name: Cache node_modules folder
         uses: actions/cache@v1
         with:
           path: node_modules
@@ -41,25 +41,30 @@ jobs:
         with:
           name: angular-app
           path: dist
-  deploy:
+  deploy-firebase:
     needs: build
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
     name: Deploy
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: Cache .firebase folder
+        uses: actions/cache@v1
         with:
-          node-version: ${{ matrix.node-version }}
+          path: .firebase
+          key: ${{ runner.os }}-firebase
+          restore-keys: |
+            ${{ runner.os }}-firebase-
       - name: Download build artefact
+        if: always()
         uses: actions/download-artifact@v1
         with:
           name: angular-app
           path: dist
-      - uses: cloudflare/wrangler-action@1.1.0
+      - name: Deploy to Firebase
+        if: always()
+        uses: w9jds/firebase-action@master
         with:
-          apiToken: ${{ secrets.CF_API_TOKEN }}
-          environment: "stage"
+          args: deploy --only hosting:tick-take
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

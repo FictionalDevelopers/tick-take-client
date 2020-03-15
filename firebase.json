@@ -1,0 +1,13 @@
+{
+  "hosting": {
+    "site": "tick-take",
+    "public": "dist/tick-take-app",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
