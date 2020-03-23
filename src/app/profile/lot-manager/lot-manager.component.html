@@ -3,15 +3,22 @@
     <h2 class="lot-manager-title">Lot Manager</h2>
     <mat-form-field>
       <mat-label>*Name</mat-label>
-      <input matInput type="text" autocomplete="off" class="lot-manager-name">
+      <input matInput type="text" autocomplete="off" class="lot-manager-name" formControlName="name">
+      <mat-error>
+        {{getErrorMessage(lotForm.get('name'))}}
+      </mat-error>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>*Description</mat-label>
-      <textarea matInput type="text" autocomplete="off" rows="13" cols="20" class="lot-manager-description"></textarea>
+      <textarea matInput type="text" autocomplete="off" rows="13" cols="20" class="lot-manager-description"
+        formControlName="description"></textarea>
+      <mat-error>
+        {{getErrorMessage(lotForm.get('description'))}}
+      </mat-error>
     </mat-form-field>
     <div class="lot-manager-bottom">
-      <button mat-raised-button color="warn">Cancel</button>
-      <button mat-raised-button color="primary">Create lot</button>
+      <button mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
+      <button mat-raised-button color="primary" [disabled]="!lotForm.valid">Create lot</button>
     </div>
   </form>
 </div>

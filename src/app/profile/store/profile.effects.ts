@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { mergeMap, map, catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { createLot, createLotSuccess, createLotError } from './profile.actions';
@@ -13,14 +14,12 @@ export class ProfileEffects {
       ofType(createLot),
       mergeMap(({ lotData }) =>
         this.profileService.createLot(lotData).pipe(
-          map(data => {
-            console.log(data);
-            return createLotSuccess();
-          }),
+          tap(({ _id }) => this.router.navigate(['/profile/lots', _id])),
+          map(() => createLotSuccess()),
           catchError(errors => of(createLotError({ errors })))
         )
       )
     )
   );
-  constructor(private actions$: Actions, private profileService: ProfileService) {}
+  constructor(private actions$: Actions, private router: Router, private profileService: ProfileService) {}
 }
