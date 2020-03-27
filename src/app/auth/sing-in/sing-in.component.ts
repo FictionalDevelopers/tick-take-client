@@ -26,9 +26,7 @@ export class SingInComponent implements OnInit {
     });
   }
 
-  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {
-    this.store.dispatch(checkAuth());
-  }
+  constructor(private fb: FormBuilder, private store: Store<AppState>, private validation: ValidationService) {}
 
   ngOnInit() {
     this.buildForm();
