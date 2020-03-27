@@ -3,7 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '@env/environment';
 
-import { SignUpData, SignInData } from './authData.model';
+import { SignUpData, SignInData, AuthObj } from './authData.model';
+import { User } from './user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,16 +12,24 @@ import { SignUpData, SignInData } from './authData.model';
 export class AuthService {
   private authUrl = `${environment.apiUrl}/api/auth`;
 
-  register(signUpData: SignUpData): Observable<string> {
-    return this.http.post<string>(`${this.authUrl}/register`, signUpData);
+  register(signUpData: SignUpData): Observable<AuthObj> {
+    return this.http.post<AuthObj>(`${this.authUrl}/register`, signUpData);
   }
 
-  login(loginData: SignInData): Observable<string> {
-    return this.http.post<string>(`${this.authUrl}/login`, loginData);
+  login(loginData: SignInData): Observable<AuthObj> {
+    return this.http.post<AuthObj>(`${this.authUrl}/login`, loginData);
   }
 
   setToken(token: string): void {
     localStorage.setItem('USER_TOKEN', token);
+  }
+
+  getToken(): string {
+    return localStorage.getItem('USER_TOKEN');
+  }
+
+  getUser(): Observable<User> {
+    return this.http.get<User>(`${this.authUrl}/current`);
   }
 
   checkAuth(): boolean {
