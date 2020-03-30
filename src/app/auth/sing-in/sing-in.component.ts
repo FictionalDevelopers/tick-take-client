@@ -7,7 +7,7 @@ import { AppState } from '../../store/app.state';
 import { login, checkAuth } from '../store/auth.actions';
 import { getAuthErrors } from '../store/auth.selector';
 
-import { ValidationService } from '../shared/validation.service';
+import { ValidationService } from '../../shared/validation.service';
 
 @Component({
   selector: 'tt-sing-in',

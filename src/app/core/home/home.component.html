@@ -1,9 +1,10 @@
-<header class="header frame">
+<header class="header wrapper">
   <a routerLink="/">Logo</a>
   <div class="header-tools">
-    <button (click)="logout()">Logout</button>
+    <button mat-button (click)="logout()">Logout</button>
+    <a mat-button routerLink='/profile'>Profile</a>
   </div>
 </header>
-<main class="content frame">
+<main class="content wrapper">
 </main>
-<footer class="footer frame">©Copyright</footer>
+<footer class="footer wrapper">©Copyright</footer>

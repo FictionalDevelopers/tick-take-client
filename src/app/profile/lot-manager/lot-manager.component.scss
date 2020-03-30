@@ -1,0 +1,15 @@
+.lot-manager {
+  &-description {
+    resize: none;
+    overflow: auto;
+  }
+
+  &-bottom {
+    display: flex;
+    justify-content: flex-end;
+
+    &>button {
+      margin-left: 10px;
+    }
+  }
+}

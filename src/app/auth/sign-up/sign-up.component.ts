@@ -8,7 +8,7 @@ import { getAuthErrors } from '../store/auth.selector';
 
 import { confirmPasswordValidator } from '../shared/validators/confirm-password.validator';
 import { nameValidator } from '../shared/validators/name.validator';
-import { ValidationService } from '../shared/validation.service';
+import { ValidationService } from '../../shared/validation.service';
 
 @Component({
   selector: 'tt-sign-up',
